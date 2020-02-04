@@ -15,14 +15,14 @@ var io = SOCKETIO(server);
 io.on('connection', (socket) =>{
   console.log('new user connected');
 
-  socket.emit('newMessage',{
-    from : 'abc@gmail.com',
-    text : 'hello bro',
-    createdAt : '123'
-  })
 
   socket.on('createMessage', (message)=>{
     console.log('Message created',message);
+    io.emit('newMessage',{
+      from: message.from,
+      text: message.text,
+      createdAt : new Date().getTime()
+    })
   })
 
   socket.on('disconnect',() =>{
@@ -30,8 +30,6 @@ io.on('connection', (socket) =>{
   });
 
 });
-
-
 
 
 server.listen(port,() =>{
