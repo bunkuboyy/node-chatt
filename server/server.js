@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const SOCKETIO = require('socket.io');
 const http = require('http');
-const {messageGenerator} = require('./utils/message.js');
+const {messageGenerator,locationGenerator} = require('./utils/message.js');
 
 const publicpath = path.join(__dirname ,'../public');
 
@@ -24,6 +24,10 @@ socket.broadcast.emit('newMessage',messageGenerator('Admin','New userjoined'));
     console.log('Message created',message);
     io.emit('newMessage',messageGenerator(message.from,message.text));
     callback('I m coder');
+  })
+
+  socket.on('createLocationMessage',(coords) =>{
+    io.emit('newLocationMessage',locationGenerator('Admin',coords.latitude,coords.longitude));
   })
 
   socket.on('disconnect',() =>{
