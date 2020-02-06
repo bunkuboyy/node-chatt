@@ -23,7 +23,7 @@ socket.broadcast.emit('newMessage',messageGenerator('Admin','New userjoined'));
   socket.on('createMessage', (message,callback)=>{
     console.log('Message created',message);
     io.emit('newMessage',messageGenerator(message.from,message.text));
-    callback('I m coder');
+    callback();
   })
 
   socket.on('createLocationMessage',(coords) =>{
